@@ -4,7 +4,8 @@ class AppTaglines {
       "Transform Your Device, One Wallpaper at a Time!";
   static const String splashNo2 = "Elevate Your Screen, Elevate Your Style.";
 // login page
-  static const String loginNo1 = "Welcome Back! Personalize Your Device Today.";
+  // static const String loginNo1 = "Welcome Back! Personalize Your Device Today.";
+  static const String loginNo1 = "Welcome Back!";
   static const String loginNo2 = "Reimagine Your Display – Log In to Explore.";
 // signup page
   static const String signupNo1 = "Join Us and Discover Endless Possibilities!";

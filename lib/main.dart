@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wallpeezer/repository/pages/splash_page.dart';
+import 'package:wallpeezer/repository/pages/login_page.dart';
+
 
 import 'domain/app_constants/app_theme.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       theme: mLightTheme,
       darkTheme: mDarkTheme,
-      home: const SplashPage(),
+      home: LoginPage(),
     );
   }
 }

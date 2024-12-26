@@ -86,7 +86,8 @@ final mDarkTheme = ThemeData(
         primary: AppColors.primaryDarkColor,
         onPrimaryContainer: AppColors.darkOnPrimaryContainerColor),
     appBarTheme: const AppBarTheme(
-        centerTitle: true, backgroundColor: AppColors.darkSurfaceColor),
+        // centerTitle: true,
+        backgroundColor: AppColors.darkSurfaceColor),
     textTheme: const TextTheme(
       displayLarge: TextStyle(
         fontFamily: "outfit",
