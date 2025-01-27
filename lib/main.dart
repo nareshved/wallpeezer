@@ -14,7 +14,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MultiBlocProvider(providers: [
-    BlocProvider(create: (context) => RegisterUserBloc(firebaseHelper: FirebaseHelper()),)
+    BlocProvider(
+      create: (context) => RegisterUserBloc(firebaseHelper: FirebaseHelper()),
+    )
   ], child: const MyApp()));
 }
 

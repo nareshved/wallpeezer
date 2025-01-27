@@ -135,11 +135,12 @@ class SignupPage extends StatelessWidget {
                           }
 
                           if (state is UserLoadedState) {
-                            Navigator.pushReplacement(
+                            Navigator.pop(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
-                                ));
+                                // MaterialPageRoute(
+                                //   builder: (context) => LoginPage(),
+                                // )
+                            );
                           }
                         }, builder: (context, state) {
                           return NewButton(
@@ -187,7 +188,7 @@ class SignupPage extends StatelessWidget {
                             const Text("Already have an account"),
                             TextButton(
                                 onPressed: () {
-                                  Navigator.push(
+                                  Navigator.pop(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => LoginPage(),

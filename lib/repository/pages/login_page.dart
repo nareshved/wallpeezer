@@ -69,8 +69,6 @@ class LoginPage extends StatelessWidget {
                             return "Enter email is required";
                           }
                           return null;
-
-
                         },
                         controllerName: emailController,
                         keyboardType: TextInputType.emailAddress,

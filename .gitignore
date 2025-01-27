@@ -33,6 +33,13 @@ migrate_working_dir/
 /build/
 
 
+# me added files
+firebase.json
+
+
+
+
+
 # Symbolication related
 app.*.symbols
 
