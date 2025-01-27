@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "312635116271",
+    "project_id": "wallpeezer",
+    "storage_bucket": "wallpeezer.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312635116271:android:1d822a453f1b1cd78c291a",
+        "android_client_info": {
+          "package_name": "com.examp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFyDJzMO0danJ_e-ZODV_uAHpnOOKzsns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312635116271:android:08eff4340fa567d18c291a",
+        "android_client_info": {
+          "package_name": "com.example.wallpeezer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFyDJzMO0danJ_e-ZODV_uAHpnOOKzsns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wallpeezer/data/firebase/firebase_provider.dart';
 import 'package:wallpeezer/domain/app_constants/app_info.dart';
 import 'package:wallpeezer/domain/app_constants/app_taglines.dart';
+import 'package:wallpeezer/repository/pages/homepage.dart';
 import 'package:wallpeezer/repository/pages/login_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -17,12 +20,18 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginPage(),
-          ));
+    Timer(const Duration(seconds: 3), () async {
+
+     var prefs = await SharedPreferences.getInstance();
+    String? myKey =  prefs.getString(FirebaseHelper.prefsKey);
+
+      Widget navigateTo = LoginPage();
+
+      if(myKey != null && myKey !=""){
+        navigateTo = const HomePage();
+      }
+
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => navigateTo,));
     });
   }
 

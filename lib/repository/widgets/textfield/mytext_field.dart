@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class MytextField extends StatelessWidget {
   MytextField(
       {super.key,
+      required this.validator,
       required this.controllerName,
       this.obscureSign,
       this.hintTxt,
@@ -16,6 +17,7 @@ class MytextField extends StatelessWidget {
   final String? hintTxt;
   final Icon txtIcon;
   final TextInputType keyboardType;
+  String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,8 @@ class MytextField extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: TextField(
+        child: TextFormField(
+          validator: validator,
           keyboardType: keyboardType,
           autocorrect: true,
           obscureText: obscrure,
