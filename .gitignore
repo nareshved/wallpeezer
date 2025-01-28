@@ -35,7 +35,7 @@ migrate_working_dir/
 
 # me added files
 firebase.json
-
+lib/data/remote/api/api_urls.dart
 
 
 
