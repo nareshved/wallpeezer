@@ -1,12 +1,11 @@
-import 'dart:developer';
+import 'dart:convert';
 import 'dart:io';
+
+import 'api_urls.dart';
+import 'app_exception.dart';
 import 'package:http/http.dart' as http;
-import 'package:wallpeezer/data/remote/api/api_urls.dart';
-import 'package:wallpeezer/domain/models/wallpaper_model/wall_data_model.dart';
 
-// api func
 class ApiHelper {
-
   Future<dynamic> getApi(String url, {Map<String, String>? header}) async {
     var uri = Uri.parse(url);
 
@@ -14,44 +13,32 @@ class ApiHelper {
       var response = await http.get(uri,
           headers: header ?? {"Authorization": ApiUrls.adminApiKey});
 
-      // internet proper but other error handle
-
       return returnDataResponse(response);
-    }
-    on SocketException {
-     throw FetchDataException(body: "Internet Error not Connected");
+    } on SocketException {
+      throw FetchDataException(body: "Internet Not Connected");
     }
   }
 
-  dynamic returnDataResponse (http.Response res) {
+  dynamic returnDataResponse(http.Response res) {
+    switch (res.statusCode) {
+      case 200:
+        var actData = res.body;
+        var mData = jsonDecode(actData);
+        return mData;
 
-     switch (res.statusCode) {
+      case 400:
+        BadRequestException(body: res.body.toString());
+      case 401:
+      case 403:
+        UnAuthorizedException(body: res.body.toString());
 
-       case 200:
-         var actRes = res.body;
-         var mData = jsonDecode(actRes);
-         return mData;
-
-       case 400:
-         throw BadRequestException(body: res.body.toString());
-
-       case 401:
-       case 403:
-         throw UnAuthorizedException(body: res.body.toString());
-
-       case 500:
-         default:
-         throw InvalidRequest(body: res.body.toString());
-
-     }
+      case 500:
+      default:
+        FetchDataException(
+            body: "error in server isssue with statusCode : ${res.statusCode}");
+    }
   }
-
-
-
-
-
-
-
+}
 
 
 
@@ -84,4 +71,3 @@ class ApiHelper {
   //     log("get api not and get error in api_helper : ${e.toString()}");
   //   }
   // }
-}
