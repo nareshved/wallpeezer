@@ -10,6 +10,7 @@ import 'package:wallpeezer/domain/app_constants/app_info.dart';
 import 'package:wallpeezer/repository/pages/login_page.dart';
 
 import '../../data/bloc/wall_bloc/wallpaper_bloc.dart';
+import '../widgets/search_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,23 +37,36 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            Flexible(
+              child: Container(
+                height: 150,
+                color: Colors.red,
+              ),
+            ),
+            ListTile(
+              leading: IconButton(
+                  onPressed: () {
+                    BlocProvider.of<RegisterUserBloc>(context)
+                        .add(LogOutUserEvent());
+
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ));
+                  },
+                  icon: const Icon(Icons.login_outlined)),
+              title: const Text("LogOut"),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: const Text(AppInfo.appName),
-        actions: [
-          IconButton(
-              onPressed: () {
-                BlocProvider.of<RegisterUserBloc>(context)
-                    .add(LogOutUserEvent());
 
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginPage(),
-                    ));
-              },
-              icon: const Icon(Icons.login_outlined))
-        ],
       ),
       body: BlocBuilder<WallpaperBloc, WallpaperStates>(
         builder: (context, state) {
@@ -72,37 +86,28 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(11.0),
-                  child: TextField(
-                    
-                    controller: searchController,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(onPressed: (){
-
-                        BlocProvider.of<WallpaperBloc>(context)
-                            .add(GetSearchWallpaperEvent(query: searchController.text.toString()));
-                      }, icon: const Icon(Icons.search)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12)
-                      )
-                    ),
-
-                  ),
+                  child: CustomSearchBar(searchController: searchController,),
                 ),
                 Expanded(
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.mData.photos!.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 9/16,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 15,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.mData.photos!.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 9/16,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            crossAxisCount: 2),
+                        itemBuilder: (context, index) {
 
-                          crossAxisCount: 2),
-                      itemBuilder: (context, index) {
-
-                        var eachPhoto = state.mData.photos![index].src!.portrait;
-                        return Image.network(eachPhoto!, fit: BoxFit.fill,);
-                      },),
+                          var eachPhoto = state.mData.photos![index].src!.portrait;
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(11),
+                            child: Image.network(eachPhoto!, fit: BoxFit.fill,),
+                          );
+                        },),
+                  ),
                 ),
               ],
             );
