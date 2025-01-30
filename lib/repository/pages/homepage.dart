@@ -7,6 +7,7 @@ import 'package:wallpeezer/data/bloc/user_register/register_events.dart';
 import 'package:wallpeezer/data/bloc/wall_bloc/wall_events.dart';
 import 'package:wallpeezer/data/bloc/wall_bloc/wall_state.dart';
 import 'package:wallpeezer/domain/app_constants/app_info.dart';
+import 'package:wallpeezer/repository/pages/details_page.dart';
 import 'package:wallpeezer/repository/pages/login_page.dart';
 
 import '../../data/bloc/wall_bloc/wallpaper_bloc.dart';
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     //
      BlocProvider.of<WallpaperBloc>(context).add(GetSearchWallpaperEvent(query: "red car"));
-     
+    //
     // BlocProvider.of<WallpaperBloc>(context)
     //     .add(GetTrendingWallpaperEvent());
   }
@@ -88,6 +89,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(11.0),
                   child: CustomSearchBar(searchController: searchController,),
                 ),
+                const SizedBox(height: 10,),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -100,11 +102,15 @@ class _HomePageState extends State<HomePage> {
                             crossAxisSpacing: 12,
                             crossAxisCount: 2),
                         itemBuilder: (context, index) {
-
                           var eachPhoto = state.mData.photos![index].src!.portrait;
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(11),
-                            child: Image.network(eachPhoto!, fit: BoxFit.fill,),
+                          return InkWell(
+                            onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(photo: eachPhoto),));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(11),
+                              child: Image.network(eachPhoto!, fit: BoxFit.fill,),
+                            ),
                           );
                         },),
                   ),
