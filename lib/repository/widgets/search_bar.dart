@@ -67,8 +67,15 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               child: IconButton(
                 icon: const Icon(Icons.search, color: Colors.white),
                 onPressed: () {
-                  BlocProvider.of<WallpaperBloc>(context)
-                      .add(GetSearchWallpaperEvent(query: widget.searchController.text.toString()));
+                  if(widget.searchController.text.isNotEmpty){
+                    BlocProvider.of<WallpaperBloc>(context)
+                        .add(GetSearchWallpaperEvent(query: widget.searchController.text.toString()));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            showCloseIcon: true,
+                            content: Text("empty value not found wallpapers")));
+                  }
                 },
               ),
             ),

@@ -34,7 +34,7 @@ class WallpaperBloc extends Bloc<WallpaperEvents, WallpaperStates>{
 
       try {
     //    var rawData = await apiHelper.getApi("${ApiUrls.searchWallpaper}?query=car");
-        var rawData = await apiHelper.getApi("${ApiUrls.searchWallpaper}?query=${event.query}");
+        var rawData = await apiHelper.getApi("${ApiUrls.searchWallpaper}?query=${event.query}&per_page=30&color=${event.colorCodeStr}");
         var wallpaperDataModel = WallpaperDataModel.fromJson(rawData);
         // save to loaded State mData
         emit(WallpaperLoadedState(mData: wallpaperDataModel));
