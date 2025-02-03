@@ -12,7 +12,6 @@ import 'package:wallpeezer/domain/models/color_model/color_model.dart';
 import 'package:wallpeezer/repository/pages/login_page.dart';
 
 import '../../data/bloc/wall_bloc/wallpaper_bloc.dart';
-import '../widgets/navbar/bottom_nav_bar.dart';
 import '../widgets/search_bar.dart';
 import 'details_page.dart';
 
@@ -123,6 +122,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 75,
                   child: ListView.builder(
+                    padding: EdgeInsets.only(left: 15),
                     scrollDirection: Axis.horizontal,
                     itemCount: allColors.length,
                     itemBuilder: (context, index) {
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                               .add(GetSearchWallpaperEvent(colorCodeStr: allColors[index].colorCode, query: searchController.text.trim()));
                         },
                         child: Container(
-                          width: 65, height: 65,
+                          width: 47, height: 47,
                           margin: const EdgeInsets.all(4),
                         decoration:  BoxDecoration(
                          shape: BoxShape.circle,
