@@ -12,6 +12,7 @@ import 'package:wallpeezer/domain/models/color_model/color_model.dart';
 import 'package:wallpeezer/repository/pages/login_page.dart';
 
 import '../../data/bloc/wall_bloc/wallpaper_bloc.dart';
+import '../widgets/navbar/bottom_nav_bar.dart';
 import '../widgets/search_bar.dart';
 import 'details_page.dart';
 
@@ -85,6 +86,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text(AppInfo.appName),
       ),
+// bottomNavigationBar: const BottomNavbarPage(),
       body: BlocBuilder<WallpaperBloc, WallpaperStates>(
         builder: (context, state) {
           if (state is WallpaperLoadingState) {
@@ -184,9 +186,9 @@ class _HomePageState extends State<HomePage> {
           }
 
           return Container(
-            color: Colors.red,
-            width: 100,
-            height: 100,
+            // color: Colors.red,
+            // width: 100,
+            // height: 100,
           );
         },
       ),

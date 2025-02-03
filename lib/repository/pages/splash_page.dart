@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wallpeezer/data/firebase/firebase_provider.dart';
 import 'package:wallpeezer/domain/app_constants/app_info.dart';
 import 'package:wallpeezer/domain/app_constants/app_taglines.dart';
-import 'package:wallpeezer/repository/pages/homepage.dart';
 import 'package:wallpeezer/repository/pages/login_page.dart';
+import 'package:wallpeezer/repository/widgets/navbar/bottom_nav_bar.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
       Widget navigateTo = LoginPage();
 
       if(myKey != null && myKey !=""){
-        navigateTo = const HomePage();
+        navigateTo = const BottomNavbarPage();
       }
 
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => navigateTo,));
