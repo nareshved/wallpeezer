@@ -10,3 +10,8 @@ class GetSearchWallpaperEvent extends WallpaperEvents{
   GetSearchWallpaperEvent({required this.query, this.colorCodeStr});
 }
 
+class GetFeaturedCollectionsEvent extends WallpaperEvents {
+  String? query;
+
+  GetFeaturedCollectionsEvent({ this.query});
+}

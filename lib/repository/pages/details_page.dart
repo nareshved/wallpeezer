@@ -3,74 +3,36 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wallpaper/wallpaper.dart';
+import 'package:wallpeezer/domain/models/wallpaper_model/wall_data_model.dart';
+import 'package:wallpeezer/repository/pages/wall_info.dart';
 
 class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key, required this.photo});
+  const DetailsPage({super.key, required this.photo, this.photoModel});
   final String photo;
+  final PhotoModel? photoModel;
 
   @override
   Widget build(BuildContext context) {
     final isPage = MediaQuery.sizeOf(context);
     return Scaffold(
-        body: Stack(
-      children: [
-        SizedBox(
-          width: isPage.width, 
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("info",),foregroundColor: Colors.white,
+        onPressed: (){
+         Navigator.push(context, MaterialPageRoute(builder: (context) =>
+         WallpaperInfoPage(photoModel: photoModel!,),));
+        },
+       icon: const Icon(Icons.info_outline, ),
+        // const Icon(Icons.add_photo_alternate_outlined, color: Colors.white,),
+        ),
+        body: SizedBox(
+          width: isPage.width,
           height: isPage.height,
           child: CachedNetworkImage(
             imageUrl: photo,
             fit: BoxFit.fitWidth,
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
-        ),
-        Positioned(
-          bottom: 60,
-          left: 30,
-          right: 30,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(9)),
-                child: Center(
-                  child: IconButton(
-                      onPressed: () {
-                        applyImg(context, isPage);
-                      },
-                      icon: Icon(
-                        Icons.edit,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 33,
-                      )),
-                ),
-              ),
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(9)),
-                child: Center(
-                  child: IconButton(
-                      onPressed: () {
-                        // saveImage(context);
-                      },
-                      icon: Icon(
-                        Icons.save_alt,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 33,
-                      )),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ));
+        ));
   }
 
   void applyImg(BuildContext context, Size isPage) async {
@@ -88,11 +50,11 @@ class DetailsPage extends StatelessWidget {
                     log(event);
                   }, onDone: () async {
                     var check = await Wallpaper.homeScreen(
-                            width: isPage.width,
-                            height: isPage.height,
-                            options: RequestSizeOptions.resizeFit)
+                        width: isPage.width,
+                        height: isPage.height,
+                        options: RequestSizeOptions.resizeFit)
                         .then(
-                      (value) {
+                          (value) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Wallpaper Apply Home Screen")));
@@ -114,11 +76,11 @@ class DetailsPage extends StatelessWidget {
                     log(event);
                   }, onDone: () async {
                     var check = await Wallpaper.lockScreen(
-                            width: isPage.width,
-                            height: isPage.height,
-                            options: RequestSizeOptions.resizeFit)
+                        width: isPage.width,
+                        height: isPage.height,
+                        options: RequestSizeOptions.resizeFit)
                         .then(
-                      (value) {
+                          (value) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Wallpaper Apply Lock Screen")));
@@ -139,11 +101,11 @@ class DetailsPage extends StatelessWidget {
                     log(event);
                   }, onDone: () async {
                     var check = await Wallpaper.bothScreen(
-                            width: isPage.width,
-                            height: isPage.height,
-                            options: RequestSizeOptions.resizeFit)
+                        width: isPage.width,
+                        height: isPage.height,
+                        options: RequestSizeOptions.resizeFit)
                         .then(
-                      (value) {
+                          (value) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Wallpaper Apply Both Screen")));

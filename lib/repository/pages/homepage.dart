@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: isPage.height*0.03,),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: GridView.builder(
                       shrinkWrap: true,
                       itemCount: state.mData.photos!.length,
@@ -158,13 +158,14 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         var eachPhoto =
                             state.mData.photos![index].src!.portrait;
+
                         return InkWell(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      DetailsPage(photo: eachPhoto),
+                                      DetailsPage(photo: eachPhoto, photoModel: state.mData.photos![index],),
                                 ));
                           },
                           child: ClipRRect(
