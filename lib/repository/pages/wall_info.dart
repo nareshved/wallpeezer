@@ -3,15 +3,17 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wallpaper/wallpaper.dart';
 import 'package:wallpeezer/domain/models/wallpaper_model/wall_data_model.dart';
 
 import '../../data/bloc/wall_bloc/wall_state.dart';
 import '../../data/bloc/wall_bloc/wallpaper_bloc.dart';
 
 class WallpaperInfoPage extends StatelessWidget {
-  const WallpaperInfoPage({super.key, required this.photoModel});
+  const WallpaperInfoPage({super.key, required this.photoModel, required this.photo});
 
   final PhotoModel photoModel;
+  final String photo;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,9 @@ class WallpaperInfoPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Photo info"),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        applyImg(context, isPage, photo );
+      }, child: Icon(Icons.save, color: Colors.white,),),
       body: BlocBuilder<WallpaperBloc, WallpaperStates>(
         builder: (context, state) {
           if (state is WallpaperLoadingState) {
@@ -123,6 +128,96 @@ class WallpaperInfoPage extends StatelessWidget {
               );
         },
       ),
+    );
+  }
+
+
+  void applyImg(BuildContext context, Size isPage, String photo) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Choose Where to Set Wallpaper"),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  var imgStream = Wallpaper.imageDownloadProgress(photo);
+
+                  imgStream.listen((event) {
+                    log(event);
+                  }, onDone: () async {
+                    var check = await Wallpaper.homeScreen(
+                        width: isPage.width,
+                        height: isPage.height,
+                        options: RequestSizeOptions.resizeFit)
+                        .then(
+                          (value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Wallpaper Apply Home Screen")));
+                      },
+                    );
+
+                    log(check);
+                  }, onError: (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text("$e")));
+                  });
+                },
+                child: const Text("Home Screen")),
+            TextButton(
+                onPressed: () {
+                  var imgStream = Wallpaper.imageDownloadProgress(photo);
+
+                  imgStream.listen((event) {
+                    log(event);
+                  }, onDone: () async {
+                    var check = await Wallpaper.lockScreen(
+                        width: isPage.width,
+                        height: isPage.height,
+                        options: RequestSizeOptions.resizeFit)
+                        .then(
+                          (value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Wallpaper Apply Lock Screen")));
+                      },
+                    );
+                    log(check);
+                  }, onError: (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text("$e")));
+                  });
+                },
+                child: const Text("Lock Screen")),
+            TextButton(
+                onPressed: () {
+                  var imgStream = Wallpaper.imageDownloadProgress(photo);
+
+                  imgStream.listen((event) {
+                    log(event);
+                  }, onDone: () async {
+                    var check = await Wallpaper.bothScreen(
+                        width: isPage.width,
+                        height: isPage.height,
+                        options: RequestSizeOptions.resizeFit)
+                        .then(
+                          (value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Wallpaper Apply Both Screen")));
+                      },
+                    );
+                    log(check);
+                  }, onError: (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text("$e")));
+                  });
+                },
+                child: const Text("Both Screen")),
+          ],
+        );
+      },
     );
   }
 }

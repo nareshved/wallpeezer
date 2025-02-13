@@ -30,7 +30,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     //
     BlocProvider.of<WallpaperBloc>(context)
-        .add(GetSearchWallpaperEvent(query: "car"));
+        .add(GetSearchWallpaperEvent(query: ""));
+
+
+
     //
     // BlocProvider.of<WallpaperBloc>(context)
     //     .add(GetTrendingWallpaperEvent());
@@ -122,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 75,
                   child: ListView.builder(
-                    padding: EdgeInsets.only(left: 15),
+                    padding: const EdgeInsets.only(left: 15),
                     scrollDirection: Axis.horizontal,
                     itemCount: allColors.length,
                     itemBuilder: (context, index) {
