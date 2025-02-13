@@ -36,7 +36,7 @@ class FirebaseHelper {
             .set(userModel.toDoc())
             .then(
           (value) {
-            log("Create User Details Saved to toc");
+            log("Create User Details Saved to fire store doc");
           },
         ).onError(
           (error, stackTrace) {

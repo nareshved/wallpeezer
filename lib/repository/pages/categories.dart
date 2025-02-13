@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallpeezer/data/bloc/wall_bloc/wall_events.dart';
-import 'package:wallpeezer/data/bloc/wall_bloc/wall_state.dart';
-
+import '../../data/bloc/wall_bloc/wall_state.dart';
 import '../../data/bloc/wall_bloc/wallpaper_bloc.dart';
 
 class CategoriesWallpapers extends StatefulWidget {
@@ -15,6 +13,7 @@ class CategoriesWallpapers extends StatefulWidget {
 }
 
 class _CategoriesWallpapersState extends State<CategoriesWallpapers> {
+ // WallpaperDataModel? wallpaperDataModel;
 
   @override
   void initState() {
@@ -41,22 +40,26 @@ class _CategoriesWallpapersState extends State<CategoriesWallpapers> {
             return Center(child: Text(state.errorMsg));
           }
 
+          if(state is WallpaperLoadedState) {
+          //  var bgImg = state.mData.photos![0].src!.landscape;
+          }
+
           if(state is CategoryLoadedState){
            return ListView.builder(
              itemCount: state.featuredCollectionModel.collections!.length,
                itemBuilder: (context, index) {
                var mData = state.featuredCollectionModel.collections!;
+               // var catImg = BlocProvider.of<WallpaperBloc>(context).add(GetSearchWallpaperEvent(query: mData[index].title!));
                return Container(
                  margin: const EdgeInsets.all(9),
                  decoration: BoxDecoration(
                    borderRadius: BorderRadius.circular(11),
-                   color: Colors.purple
+               //    image: DecorationImage(image: NetworkImage())
                  ),
                  child: ListTile(
                    leading: CircleAvatar(backgroundColor: Colors.white,child: Text("$index"),),
                    title: Text(mData[index].title!),
                    subtitle: Text("${mData[index].photos_count.toString()} Wallpapers"),
-                   
                  ),
                );
                },

@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     //
     BlocProvider.of<WallpaperBloc>(context)
-        .add(GetSearchWallpaperEvent(query: ""));
+        .add(GetSearchWallpaperEvent(query: "car"));
 
 
 
@@ -176,6 +176,7 @@ class _HomePageState extends State<HomePage> {
                             child: CachedNetworkImage(
                               imageUrl: eachPhoto!,
                               fit: BoxFit.fill,
+
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
                             ),

@@ -10,7 +10,8 @@ import '../../data/bloc/wall_bloc/wall_state.dart';
 import '../../data/bloc/wall_bloc/wallpaper_bloc.dart';
 
 class WallpaperInfoPage extends StatelessWidget {
-  const WallpaperInfoPage({super.key, required this.photoModel, required this.photo});
+  const WallpaperInfoPage(
+      {super.key, required this.photoModel, required this.photo});
 
   final PhotoModel photoModel;
   final String photo;
@@ -22,9 +23,15 @@ class WallpaperInfoPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Photo info"),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        applyImg(context, isPage, photo );
-      }, child: Icon(Icons.save, color: Colors.white,),),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          applyImg(context, isPage, photo);
+        },
+        child: const Icon(
+          Icons.save,
+          color: Colors.white,
+        ),
+      ),
       body: BlocBuilder<WallpaperBloc, WallpaperStates>(
         builder: (context, state) {
           if (state is WallpaperLoadingState) {
@@ -46,7 +53,8 @@ class WallpaperInfoPage extends StatelessWidget {
                   width: isPage.width,
                   height: isPage.height * 0.4,
                   child: CachedNetworkImage(
-                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
                     imageUrl: photoModel.src!.landscape!,
                     fit: BoxFit.fill,
                     errorWidget: (context, url, error) =>
@@ -88,32 +96,55 @@ class WallpaperInfoPage extends StatelessWidget {
                       SizedBox(
                         height: isPage.height * 0.045,
                       ),
-
                       ListView.builder(
                         shrinkWrap: true,
                         itemCount: 1,
                         itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            ListTile(
-                              leading: Text("Id : ",  style: Theme.of(context).textTheme.titleLarge,),
-                              title: Text(photoModel.id.toString(),
-                              style: Theme.of(context).textTheme.titleLarge,
+                          return Column(
+                            children: [
+                              ListTile(
+                                leading: Text(
+                                  "Id : ",
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                title: Text(
+                                  photoModel.id.toString(),
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                trailing: photoModel.liked!
+                                    ? const Icon(Icons.favorite)
+                                    : const Icon(Icons.favorite_border),
                               ),
-                              trailing: photoModel.liked! ? const Icon(Icons.favorite) : const Icon(Icons.favorite_border),
-                            ), ListTile(
-                              leading:  Text("Photographer Id : ",  style: Theme.of(context).textTheme.titleLarge,),
-                              title: Text(photoModel.photographer_id!.toString()),
-                            ),ListTile(
-                              leading:  Text("Photographer : ",  style: Theme.of(context).textTheme.titleLarge,),
-                              title: Text(photoModel.photographer!.toString()),
-                            ),ListTile(
-                              leading:  Text("Dimension : ",  style: Theme.of(context).textTheme.titleLarge,),
-                              title: Text("${photoModel.width} * ${photoModel.height}",  style: Theme.of(context).textTheme.titleLarge,),
-                            ),
-                          ],
-                        );
-                      },),
+                              ListTile(
+                                leading: Text(
+                                  "Photographer Id : ",
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                title: Text(
+                                    photoModel.photographer_id!.toString()),
+                              ),
+                              ListTile(
+                                leading: Text(
+                                  "Photographer : ",
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                title:
+                                    Text(photoModel.photographer!.toString()),
+                              ),
+                              ListTile(
+                                leading: Text(
+                                  "Dimension : ",
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                title: Text(
+                                  "${photoModel.width} * ${photoModel.height}",
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ))
@@ -131,7 +162,6 @@ class WallpaperInfoPage extends StatelessWidget {
     );
   }
 
-
   void applyImg(BuildContext context, Size isPage, String photo) async {
     showDialog(
       context: context,
@@ -147,11 +177,11 @@ class WallpaperInfoPage extends StatelessWidget {
                     log(event);
                   }, onDone: () async {
                     var check = await Wallpaper.homeScreen(
-                        width: isPage.width,
-                        height: isPage.height,
-                        options: RequestSizeOptions.resizeFit)
+                            width: isPage.width,
+                            height: isPage.height,
+                            options: RequestSizeOptions.resizeFit)
                         .then(
-                          (value) {
+                      (value) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Wallpaper Apply Home Screen")));
@@ -173,11 +203,11 @@ class WallpaperInfoPage extends StatelessWidget {
                     log(event);
                   }, onDone: () async {
                     var check = await Wallpaper.lockScreen(
-                        width: isPage.width,
-                        height: isPage.height,
-                        options: RequestSizeOptions.resizeFit)
+                            width: isPage.width,
+                            height: isPage.height,
+                            options: RequestSizeOptions.resizeFit)
                         .then(
-                          (value) {
+                      (value) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Wallpaper Apply Lock Screen")));
@@ -198,11 +228,11 @@ class WallpaperInfoPage extends StatelessWidget {
                     log(event);
                   }, onDone: () async {
                     var check = await Wallpaper.bothScreen(
-                        width: isPage.width,
-                        height: isPage.height,
-                        options: RequestSizeOptions.resizeFit)
+                            width: isPage.width,
+                            height: isPage.height,
+                            options: RequestSizeOptions.resizeFit)
                         .then(
-                          (value) {
+                      (value) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Wallpaper Apply Both Screen")));
